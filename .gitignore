@@ -1,4 +1,6 @@
 *.pbxuser
 *.perspectivev3
 build
-
+.DS_Store
+MGSplitView.xcodeproj/project.xcworkspace/
+MGSplitView.xcodeproj/xcuserdata/
