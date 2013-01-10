@@ -163,6 +163,17 @@
 #pragma mark View management
 
 
+#ifdef __IPHONE_6_0
+-(NSUInteger)supportedInterfaceOrientations {
+    if (self.detailViewController)
+    {
+        return [self.detailViewController supportedInterfaceOrientations];
+    }
+    
+    return UIInterfaceOrientationMaskAll;
+}
+#endif
+// This will never be called since 6.0
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if (self.detailViewController)
