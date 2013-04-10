@@ -12,7 +12,7 @@
 
 @interface DetailViewController ()
 
-@property (nonatomic, retain) UIPopoverController *popoverController;
+@property (nonatomic, strong) UIPopoverController *popoverController;
 - (void)configureView;
 
 @end
@@ -32,8 +32,7 @@
 - (void)setDetailItem:(id)newDetailItem
 {
     if (detailItem != newDetailItem) {
-        [detailItem release];
-        detailItem = [newDetailItem retain];
+        detailItem = newDetailItem;
         
         // Update the view.
         [self configureView];
@@ -72,7 +71,6 @@
 		NSMutableArray *items = [[toolbar items] mutableCopy];
 		[items insertObject:barButtonItem atIndex:0];
 		[toolbar setItems:items animated:YES];
-		[items release];
 	}
     self.popoverController = pc;
 }
@@ -89,7 +87,6 @@
 		NSMutableArray *items = [[toolbar items] mutableCopy];
 		[items removeObject:barButtonItem];
 		[toolbar setItems:items animated:YES];
-		[items release];
 	}
     self.popoverController = nil;
 }
@@ -160,15 +157,8 @@
 
 
 // Ensure that the view controller supports rotation and that the split view can therefore show in both portrait and landscape.
-#ifdef __IPHONE_6_0
 -(NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
-}
-#endif
-// This will never be called since 6.0
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 
 
@@ -178,15 +168,6 @@
 }
 
 
-- (void)dealloc
-{
-    [popoverController release];
-    [toolbar release];
-    
-    [detailItem release];
-    [detailDescriptionLabel release];
-    [super dealloc];
-}
 
 
 @end

@@ -29,14 +29,8 @@
 
 
 // Ensure that the view controller supports rotation and that the split view can therefore show in both portrait and landscape.
-#ifdef __IPHONE_6_0
 -(NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskAll;
-}
-#endif
-// This will never be called since 6.0
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
 }
 
 
@@ -76,7 +70,7 @@
     // Dequeue or create a cell of the appropriate type.
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
@@ -101,11 +95,6 @@
 #pragma mark Memory management
 
 
-- (void)dealloc
-{
-    [detailViewController release];
-    [super dealloc];
-}
 
 
 @end
