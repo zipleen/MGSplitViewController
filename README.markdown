@@ -3,6 +3,8 @@ MGSplitViewController
 
 MGSplitViewController is a replacement for UISplitViewController, with various useful enhancements.
 
+*** This version has been updated for iOS by JeremyAgost (https://github.com/JeremyAgost/MGSplitViewController), with bugfixes from mooshee (https://github.com/mooshee/MGSplitViewController) and valeriyvan (https://github.com/valeriyvan/MGSplitViewController) ***
+
 
 Donations
 ---------
