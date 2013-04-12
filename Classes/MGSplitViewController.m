@@ -942,6 +942,7 @@
 		if ([_viewControllers objectAtIndex:0] == newMaster) {
 			changed = NO;
 		} else {
+            [self.masterViewController.view removeFromSuperview];
 			[_viewControllers replaceObjectAtIndex:0 withObject:newMaster];
 		}
 		
