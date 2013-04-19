@@ -1058,7 +1058,7 @@
 		_splitWidth = MG_PANESPLITTER_SPLIT_WIDTH;
 		self.allowsDraggingDivider = YES;
 	} else {
-        NSAssert(TRUE, @"Invalid MGSplitViewDividerStyle");
+        NSAssert(TRUE, @"Invalid MGSplitViewDividerStyle", nil);
     }
 	
 	// Update divider and corners.
