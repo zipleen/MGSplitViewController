@@ -112,12 +112,17 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if ((self = [super initWithCoder:aDecoder])) {
-		[self setup];
+		//[self setup];
 	}
 	
 	return self;
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self setup];
+}
 
 - (void)setup
 {
