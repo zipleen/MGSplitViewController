@@ -23,6 +23,14 @@
 #define MG_ANIMATION_CHANGE_SPLIT_ORIENTATION	@"ChangeSplitOrientation"	// Animation ID for internal use.
 #define MG_ANIMATION_CHANGE_SUBVIEWS_ORDER		@"ChangeSubviewsOrder"	// Animation ID for internal use.
 
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
+#define IOS7_OR_GREATER SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")
+#define PRE_IOS7 SYSTEM_VERSION_LESS_THAN(@"7.0")
 
 @interface MGSplitViewController (MGPrivateMethods)
 
@@ -121,6 +129,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if ( IOS7_OR_GREATER ) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
     [self setup];
 }
 
@@ -167,7 +178,9 @@
     {
         return [self.detailViewController supportedInterfaceOrientations];
     }
-    
+    if ( self.masterViewController ) {
+        return [self.masterViewController supportedInterfaceOrientations];
+    }
     return UIInterfaceOrientationMaskAll;
 }
 
@@ -227,7 +240,7 @@
 	}
 	
 	// Account for status bar, which always subtracts from the height (since it's always at the top of the screen).
-	height -= statusBarHeight;
+	height -= PRE_IOS7 ? statusBarHeight : 0.0;
     // Accout for tabbar
 	height -= tabBarHeight;
     
@@ -1101,6 +1114,10 @@
 	return nil;
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
 
 @synthesize showsMasterInPortrait;
 @synthesize showsMasterInLandscape;
