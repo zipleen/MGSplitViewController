@@ -18,5 +18,5 @@
     "commit": "c41dbfc4e13650137b322bdd8bcedcc792be1031"
   },
   "source_files": "Classes/MGSplit{ViewController,DividerView,CornersView}.*",
-  "requires_arc": false
+  "requires_arc": true 
 }
