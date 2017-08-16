@@ -7,7 +7,7 @@
   "summary": "A flexible, advanced split-view controller for iPad developers.",
   "license": {
     "type": "Custom",
-    "file": "Source Code License.rtf"
+    "file": "LICENSE.txt"
   },
   "homepage": "https://github.com/mattgemmell/MGSplitViewController",
   "authors": {
@@ -15,7 +15,7 @@
   },
   "source": {
     "git": "https://github.com/zipleen/MGSplitViewController.git",
-    "commit": "c41dbfc4e13650137b322bdd8bcedcc792be1031"
+    "tag": "v1.0.0"
   },
   "source_files": "Classes/MGSplit{ViewController,DividerView,CornersView}.*",
   "requires_arc": true 
