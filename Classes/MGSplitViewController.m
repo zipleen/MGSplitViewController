@@ -154,7 +154,7 @@
 		divRect.origin.x = _splitPosition;
 		divRect.size.width = _splitWidth;
 	}
-	_dividerView = [[MGSplitDividerView alloc] initWithFrame:divRect];
+	_dividerView = [[MGSplitDividerView alloc] init];
 	_dividerView.splitViewController = self;
 	_dividerView.backgroundColor = MG_DEFAULT_CORNER_COLOR;
 	_dividerStyle = MGSplitViewDividerStyleThin;
@@ -218,18 +218,9 @@
 - (CGSize)splitViewSizeForOrientation:(UIInterfaceOrientation)theOrientation
 {
 	UIScreen *screen = [UIScreen mainScreen];
-	CGRect fullScreenRect = screen.bounds; // always implicitly in Portrait orientation.
+	// getting screen bounds will not show you the application frame
 	CGRect appFrame = screen.applicationFrame;
-	
-	// Find status bar height by checking which dimension of the applicationFrame is narrower than screen bounds.
-	// Little bit ugly looking, but it'll still work even if they change the status bar height in future.
-	float statusBarHeight = MAX((fullScreenRect.size.width - appFrame.size.width), (fullScreenRect.size.height - appFrame.size.height));
-    
-    // In iOS 7 the status bar is transparent, so don't adjust for it.
-    if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) {
-        statusBarHeight = 0;
-    }
-	
+		
 	float navigationBarHeight = 0;
 	if ((self.navigationController)&&(!self.navigationController.navigationBarHidden)) {
 		navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
@@ -239,17 +230,17 @@
     float tabBarHeight = self.tabBarController.tabBar.bounds.size.height;
     
 	// Initially assume portrait orientation.
-	float width = fullScreenRect.size.width;
-	float height = fullScreenRect.size.height;
+	float width = appFrame.size.width;
+	float height = appFrame.size.height;
 	
     // Correct for orientation (only for iOS7.1 and earlier, since iOS8 it will do it automatically).
 	if (NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1 && UIInterfaceOrientationIsLandscape(theOrientation)) {
 		width = height;
-		height = fullScreenRect.size.width;
+		height = appFrame.size.width;
 	}
 	
-	// Account for status bar, which always subtracts from the height (since it's always at the top of the screen).
-	height -= PRE_IOS7 ? statusBarHeight : 0.0;
+	// because of the screen bounds, 20 pixels are off...
+	height += 20.0;
     // Accout for tabbar
 	height -= tabBarHeight;
     
@@ -275,7 +266,7 @@
 	}
 	
 	// Layout the master, divider and detail views.
-	CGRect newFrame = CGRectMake(0, 0, width, height);
+	CGRect newFrame = CGRectMake(0, [self.topLayoutGuide length], width, height);
 	UIViewController *controller;
 	UIView *theView;
 	BOOL shouldShowMaster = [self shouldShowMasterForInterfaceOrientation:theOrientation];
